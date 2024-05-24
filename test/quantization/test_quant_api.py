@@ -43,8 +43,8 @@ from torchao.quantization.utils import (
     TORCH_VERSION_AFTER_2_4,
 )
 from pathlib import Path
-from sentencepiece import SentencePieceProcessor
-from model import Transformer, prepare_inputs_for_model
+from torchao.models.llama.tokenizer import get_tokenizer
+from torchao.models.llama.model import Transformer, prepare_inputs_for_model
 import copy
 
 
@@ -200,8 +200,9 @@ class TestQuantFlow(unittest.TestCase):
         model.eval()
         tokenizer_path = checkpoint_path.parent / "tokenizer.model"
         assert tokenizer_path.is_file(), tokenizer_path
-        tokenizer = SentencePieceProcessor(  # pyre-ignore[28]
-            model_file=str(tokenizer_path)
+        tokenizer = get_tokenizer(  # pyre-ignore[28]
+            tokenizer_path,
+            "Llama-2-7b-chat-hf",
         )
         blocksize = 128
         percdamp = 0.01
@@ -262,8 +263,9 @@ class TestQuantFlow(unittest.TestCase):
         model.eval()
         tokenizer_path = checkpoint_path.parent / "tokenizer.model"
         assert tokenizer_path.is_file(), tokenizer_path
-        tokenizer = SentencePieceProcessor(  # pyre-ignore[28]
-            model_file=str(tokenizer_path)
+        tokenizer = get_tokenizer(  # pyre-ignore[28]
+            tokenizer_path,
+            "Llama-2-7b-chat-hf",
         )
 
         quantizer = Int8DynActInt4WeightQuantizer(groupsize=128, precision=precision)
@@ -295,8 +297,9 @@ class TestQuantFlow(unittest.TestCase):
         model.eval()
         tokenizer_path = checkpoint_path.parent / "tokenizer.model"
         assert tokenizer_path.is_file(), tokenizer_path
-        tokenizer = SentencePieceProcessor(  # pyre-ignore[28]
-            model_file=str(tokenizer_path)
+        tokenizer = get_tokenizer(  # pyre-ignore[28]
+            tokenizer_path,
+            "Llama-2-7b-chat-hf",
         )
         blocksize = 128
         percdamp = 0.01
@@ -354,8 +357,9 @@ class TestQuantFlow(unittest.TestCase):
         model.eval()
         tokenizer_path = checkpoint_path.parent / "tokenizer.model"
         assert tokenizer_path.is_file(), tokenizer_path
-        tokenizer = SentencePieceProcessor(  # pyre-ignore[28]
-            model_file=str(tokenizer_path)
+        tokenizer = get_tokenizer(  # pyre-ignore[28]
+            tokenizer_path,
+            "Llama-2-7b-chat-hf",
         )
         groupsize = 128
         quantizer = Int4WeightOnlyQuantizer(
@@ -389,8 +393,9 @@ class TestQuantFlow(unittest.TestCase):
         model.eval()
         tokenizer_path = checkpoint_path.parent / "tokenizer.model"
         assert tokenizer_path.is_file(), tokenizer_path
-        tokenizer = SentencePieceProcessor(  # pyre-ignore[28]
-            model_file=str(tokenizer_path)
+        tokenizer = get_tokenizer(  # pyre-ignore[28]
+            tokenizer_path,
+            "Llama-2-7b-chat-hf",
         )
         result=TransformerEvalWrapper(
             model,
