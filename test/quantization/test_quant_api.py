@@ -284,12 +284,12 @@ class TestQuantFlow(unittest.TestCase):
             f"accuracy regressed from 8.23 to {result['results']['wikitext']['word_perplexity,none']}"
         )
 
-    @unittest.skip("skipping until we get checkpoints for gpt-fast")
+    # @unittest.skip("skipping until we get checkpoints for gpt-fast")
     def test_gptq_quantizer_int4wo(self):
         from torchao.quantization.GPTQ import Int4WeightOnlyGPTQQuantizer, InputRecorder, TransformerEvalWrapper
         precision = torch.bfloat16
         device = "cuda"
-        checkpoint_path = Path("../gpt-fast/checkpoints/meta-llama/Llama-2-7b-chat-hf/model.pth")
+        checkpoint_path = Path("/home/cdhernandez/local/gpt-fast/checkpoints/meta-llama/Llama-2-7b-chat-hf/model.pth")
         model = Transformer.from_name(checkpoint_path.parent.name)
         checkpoint = torch.load(str(checkpoint_path), mmap=True, weights_only=True)
         model.load_state_dict(checkpoint, assign=True)
@@ -344,12 +344,12 @@ class TestQuantFlow(unittest.TestCase):
             f"accuracy regressed from 7.76 to {result['results']['wikitext']['word_perplexity,none']}"
         )
 
-    @unittest.skip("skipping until we get checkpoints for gpt-fast")
+    # @unittest.skip("skipping until we get checkpoints for gpt-fast")
     def test_quantizer_int4wo(self):
         from torchao.quantization.GPTQ import Int4WeightOnlyQuantizer, TransformerEvalWrapper
         precision = torch.bfloat16
         device = "cuda"
-        checkpoint_path = Path("../gpt-fast/checkpoints/meta-llama/Llama-2-7b-chat-hf/model.pth")
+        checkpoint_path = Path("/home/cdhernandez/local/gpt-fast/checkpoints/meta-llama/Llama-2-7b-chat-hf/model.pth")
         model = Transformer.from_name(checkpoint_path.parent.name)
         checkpoint = torch.load(str(checkpoint_path), mmap=True, weights_only=True)
         model.load_state_dict(checkpoint, assign=True)
